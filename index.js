@@ -45,6 +45,7 @@ const DEBUG_STATE = false;
 client.on("ready", () => {
     logger.alert(`${client.user.username} | Online and ready`);
     client.user.setActivity("owo", { type: "PLAYING" });
+    logger.log(`I am in ${client.guilds.cache.size} guilds.`)
 });
 
 client.on("disconnect", () => {
