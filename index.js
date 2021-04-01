@@ -1,6 +1,6 @@
 /**
  * @name index.js
- * @description The Primary entry file for the "Owoify" discord bot.
+ * @description The Primary entry file for the "OwOifier" discord bot.
  * @author Luna
  * @version 2.0
  * @license MIT
