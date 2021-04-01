@@ -92,7 +92,7 @@ client.on("message", async message => {
     }
 
     // Finally, owoifies the text
-    var start_text = message.content;
+    var start_text = message.content.toLowerCase();
     message.delete();
     let end_text = owoifyx(start_text);
     if(GUILD_ID.includes(message.guild.id)) {
