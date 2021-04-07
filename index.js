@@ -27,7 +27,6 @@ const client = new Client({
     disableMentions: "everyone",
 });
 const TOKEN = process.env.TOKEN;
-const GUILD_ID = ["399442822480003083", "792693684453769237"];
 const OVERRIDE_CHAR = process.env.OVERRIDE;
 const WHITELIST = ["136631672425807872"];
 const BLACKLIST = [];
@@ -45,7 +44,7 @@ const DEBUG_STATE = false;
 client.on("ready", () => {
     logger.alert(`${client.user.username} | Online and ready`);
     client.user.setActivity("owo", { type: "PLAYING" });
-    logger.log(`I am in ${client.guilds.cache.size} guilds.`)
+    logger.log(`I am in ${client.guilds.cache.size} guilds.`);
 });
 
 client.on("disconnect", () => {
@@ -77,7 +76,7 @@ client.on("guildCreate", guild => {
 client.on("message", async message => {
     // Check for returned values
     if (message.author.bot | !message.guild) return;
-    //if (WHITELIST.includes(message.author.id)) return;
+    if (WHITELIST.includes(message.author.id)) return;
     if (BLACKLIST.includes(message.author.id)) return console.alert(`${message.author.id}: ${message.author.username} is blacklisted and has attempted to use the bot!`);
     if (message.content.startsWith(OVERRIDE_CHAR)) return;
     if (message.content.startsWith("https://") || message.content.startsWith("http://")) return;
@@ -97,9 +96,6 @@ client.on("message", async message => {
     var start_text = message.content.toLowerCase();
     message.delete();
     let end_text = owoifyx(start_text);
-    if(GUILD_ID.includes(message.guild.id)) {
-        logger.info("User: " + message.author.username + " Value imput: "  + start_text + " Value exit: " + end_text);
-    }
     message.channel.send(message.author.username + "> " + end_text);
 });
 
