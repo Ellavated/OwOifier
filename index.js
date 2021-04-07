@@ -83,7 +83,6 @@ client.on("message", async message => {
     if (message.content.endsWith(".gif")) return;
     if (message.attachments.size >= 1) return;
     if (message.mentions.members.size >= 1) return;
-    //if (message.channel.name != "general") return;
 
     // Message size and profanity check
     let args = message.content.toLowerCase().split();
