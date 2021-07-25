@@ -4,8 +4,7 @@
  * @author Luna
  * @version 2.0
  * @license MIT
- */
-
+*/
 /////////////////////
 // Imports
 /////////////////////
@@ -64,7 +63,7 @@ client.on("warn", w => {
 });
 
 client.on("debug", d => {
-   if (DEBUG_STATE == true) {
+   if (DEBUG_STATE) {
        logger.debug(d);
    }
 });
@@ -74,7 +73,7 @@ client.on("guildCreate", guild => {
 });
 
 client.on("message", async message => {
-    // Check for returned values
+    // Check certain values and return if needed
     if (message.author.bot | !message.guild) return;
     if (WHITELIST.includes(message.author.id)) return;
     if (BLACKLIST.includes(message.author.id)) return logger.alert(`${message.author.id}: ${message.author.username} is blacklisted and has attempted to use the bot!`);
@@ -84,14 +83,14 @@ client.on("message", async message => {
     if (message.attachments.size >= 1) return;
     if (message.mentions.members.size >= 1) return;
 
-    // Message size and profanity check
+    // Split message into 'args', determain size, and if it contains bad words, fix it.
     let args = message.content.toLowerCase().split();
     if (args.length >= 75) return logger.error(`${message.guild.name} | A message was to big for me to change. This is to prevent large text from being sent.`) & message.channel.send("Sowwy this was too long for me VnV");
     for (var i in BAD_WORDS) {
         if(args.includes(BAD_WORDS[i].toLowerCase())) return message.delete() & message.channel.send("Hey! Watch your language >_<");
     }
 
-    // Finally, owoifies the text
+    // and finally, owoifies the text
     var start_text = message.content.toLowerCase();
     message.delete();
     let end_text = owoifyx(start_text);
