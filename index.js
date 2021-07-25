@@ -77,7 +77,7 @@ client.on("message", async message => {
     // Check for returned values
     if (message.author.bot | !message.guild) return;
     if (WHITELIST.includes(message.author.id)) return;
-    if (BLACKLIST.includes(message.author.id)) return console.alert(`${message.author.id}: ${message.author.username} is blacklisted and has attempted to use the bot!`);
+    if (BLACKLIST.includes(message.author.id)) return logger.alert(`${message.author.id}: ${message.author.username} is blacklisted and has attempted to use the bot!`);
     if (message.content.startsWith(OVERRIDE_CHAR)) return;
     if (message.content.startsWith("https://") || message.content.startsWith("http://")) return;
     if (message.content.endsWith(".gif")) return;
