@@ -8,7 +8,7 @@
 /////////////////////
 // Imports
 /////////////////////
-const { Client } = require("discord.js");
+const { Client, Intents } = require("discord.js");
 const owoifyx = require("owoifyx");
 require("dotenv").config();
 const moment = require("moment");
@@ -23,7 +23,11 @@ const logger = require("./Logger/logger")(__dirname + `/logs/log-${date}.txt`);
 // Constant Vars
 /////////////////////
 const client = new Client({
-    disableMentions: "everyone",
+    intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES],
+    allowedMentions: { 
+        parse: ['users', 'roles'],
+        repliedUser: false
+    }
 });
 const TOKEN = process.env.TOKEN;
 const OVERRIDE_CHAR = process.env.OVERRIDE;
@@ -72,7 +76,7 @@ client.on("guildCreate", guild => {
     logger.log(`I joined ${guild.name} owned by ${guild.owner.user.username}`);
 });
 
-client.on("message", async message => {
+client.on("messageCreate", async message => {
     // Check certain values and return if needed
     if (message.author.bot | !message.guild) return;
     if (WHITELIST.includes(message.author.id)) return;
@@ -81,7 +85,7 @@ client.on("message", async message => {
     if (message.content.startsWith("https://") || message.content.startsWith("http://")) return;
     if (message.content.endsWith(".gif")) return;
     if (message.attachments.size >= 1) return;
-    if (message.mentions.members.size >= 1) return;
+    if (message.mentions.members.cache >= 1) return;
 
     // Split message into 'args', determain size, and if it contains bad words, fix it.
     let args = message.content.toLowerCase().split();
@@ -94,7 +98,7 @@ client.on("message", async message => {
     var start_text = message.content.toLowerCase();
     message.delete();
     let end_text = owoifyx(start_text);
-    message.channel.send(message.author.username + "> " + end_text);
+    message.channel.send(`${message.author.username} > ${end_text}`);
 });
 
 client.login(TOKEN);
