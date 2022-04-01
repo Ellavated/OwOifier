@@ -67,7 +67,7 @@ client.on("guildCreate", guild => {
 client.on("messageCreate", async message => {
     // Check certain values and return if needed
     if (message.author.bot | !message.guild) return;
-    // if (EXEMPT.includes(message.author.id)) return;
+    if (EXEMPT.includes(message.author.id)) return;
     if (message.content.startsWith(OVERRIDE_CHAR)) return;
     if (message.content.startsWith("https://") || message.content.startsWith("http://")) return;
     if (message.content.endsWith(".gif")) return;
